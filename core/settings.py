@@ -44,11 +44,7 @@ INSTALLED_APPS = [
      
     'rest_framework',
     'rest_framework.authtoken',
-    # 'dj_rest_auth',
-    # 'dj_rest_auth.registration',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
+   
     'django_cleanup.apps.CleanupConfig',
     
     
@@ -57,6 +53,7 @@ INSTALLED_APPS = [
     'teachers',
     'users',
     'phonenumber_field',
+ 
     
 ]
 
@@ -131,7 +128,7 @@ REST_FRAMEWORK={
     'DEFAULT_AUTHENTICATION_CLASSES':[
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
 
@@ -150,7 +147,7 @@ SIMPLE_JWT = {
 
 }
 
-# AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

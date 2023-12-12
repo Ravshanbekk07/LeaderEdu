@@ -1,11 +1,12 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 class Teacher(models.Model):
     name=models.CharField(max_length=100)
     description=models.CharField(null=True,blank=True)
-    phone=models.CharField(max_length=13)
-    experience=models.FloatField()
-    score=models.FloatField()
+    phone=PhoneNumberField()
+    experience=models.CharField(max_length=50)
+    score=models.CharField(max_length=50)
     picture=models.ImageField(upload_to='pictures',null=True,blank=True)
 
 
