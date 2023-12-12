@@ -17,4 +17,6 @@ class Category(models.Model):
     type=models.CharField(max_length=100)
     picture =models.ImageField(upload_to='pictures/',null=True,blank=True)
     description=models.CharField()
-    
+
+    def __str__(self) -> str:
+        return self.type
