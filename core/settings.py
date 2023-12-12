@@ -55,7 +55,8 @@ INSTALLED_APPS = [
    
     #locals
     'teachers',
-    'users'
+    'users',
+    'phonenumber_field',
     
 ]
 
