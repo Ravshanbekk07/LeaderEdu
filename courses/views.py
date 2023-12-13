@@ -29,12 +29,10 @@ class CategoryList(APIView):
         language=request.GET.get('language','ru')
         if language == 'uz':
             categories=Category.objects.all()
-        
             serializer=CategorySerializerUZ(categories,many=True)
             return Response(serializer.data)
         elif language =='ru':
             categories=Category.objects.all()
-        
             serializer=CategorySerializerRU(categories,many=True)
             return Response(serializer.data)
 
