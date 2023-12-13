@@ -44,17 +44,15 @@ INSTALLED_APPS = [
      
     'rest_framework',
     'rest_framework.authtoken',
-   
     'django_cleanup.apps.CleanupConfig',
+    'phonenumber_field',
     
-    
-   
     #locals
     'teachers',
     'users',
     'courses',
     'results',
-    'phonenumber_field',
+    
  
     
 ]
