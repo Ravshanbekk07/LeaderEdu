@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'teachers',
     'users',
     'courses',
-    'results'
+    'results',
     'phonenumber_field',
  
     
