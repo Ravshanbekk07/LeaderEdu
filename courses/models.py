@@ -19,6 +19,7 @@ class Category(models.Model):
     description_uz=models.CharField()
     description_ru=models.CharField()
     picture =models.ImageField(upload_to='pictures/',null=True,blank=True)
+    
 
     def __str__(self) -> str:
-        return f'{self.type_uz}  {self.description_uz} {self.type_ru}  '
+        return f'{self.type_uz}  {self.description_uz}'
