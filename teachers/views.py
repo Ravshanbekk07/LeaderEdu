@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from .models import Teacher
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from .serializers import TeacherSerializer
+from .serializers import TeacherSerializer,TeacherSerializerUZ,TeacherSerializerRU
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,9 +15,16 @@ def check_user(role):
 class TeacherList(APIView):
 
     def get(self,request):
-        teachers=Teacher.objects.all()
-        serializer=TeacherSerializer(teachers,many=True)
-        return Response(serializer.data)
+        language=request.GET.get('language','ru')
+        if language=='uz':
+            teachers=Teacher.objects.all()
+            serializer=TeacherSerializerUZ(teachers,many=True)
+            return Response(serializer.data)
+        elif language=='ru':
+            teachers=Teacher.objects.all()
+            serializer=TeacherSerializerRU(teachers,many=True)
+            return Response(serializer.data)
+        
     def post(self,request):
         check_user(role=request.user.role)
         serializer=TeacherSerializer(data=request.data)
@@ -25,7 +32,8 @@ class TeacherList(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
-class TeacherDElete(APIView):
+class TeacherDetail(APIView):
+    
     def delete(self,request,pk):
         check_user(role=request.user.role)
         teacher=get_object_or_404(Teacher,id=pk)

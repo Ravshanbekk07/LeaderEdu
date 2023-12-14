@@ -12,18 +12,20 @@ class ResultSerializer(serializers.ModelSerializer):
     #     if instance.teacher:
     #         representation['teacher_detail']=TeacherSerializer(instance.teacher).data
     #     return representation
-class ResultSerializerUz(serializers.ModelSerializer):
+class ResultSerializerUZ(serializers.ModelSerializer):
+   
     class Meta:
         model=Results
         fields=['id','description_uz','picture','teacher']
+
     def to_representation(self, instance):
-        representation= super().to_representation(instance)
+        representation = super().to_representation(instance)
         if instance.teacher:
-            representation['teacher_detail']=TeacherSerializer(instance.teacher).data
+            representation['teacher_detail'] = TeacherSerializer(instance.teacher).data
         return representation
 
-class ResultSerializerUz(serializers.ModelSerializer):
+class ResultSerializerRU(serializers.ModelSerializer):
     class Meta:
         model=Results
-        fields=['id','description_uz','picture','teacher']
+        fields=['id','description_ru','picture','teacher']
         
