@@ -33,7 +33,19 @@ class TeacherList(APIView):
             return Response(serializer.data)
         return Response(serializer.errors)
 class TeacherDetail(APIView):
-    
+    def get(self,request,pk):
+        teacher=get_object_or_404(Teacher,id=pk)
+        serializer=TeacherSerializer(teacher)
+        return Response(serializer.data)
+
+    def put(self,request,pk):
+        check_user(request.user.role)
+        teacher=get_object_or_404(Teacher,id=pk)
+        serializer=TeacherSerializer(instance=teacher,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
     def delete(self,request,pk):
         check_user(role=request.user.role)
         teacher=get_object_or_404(Teacher,id=pk)
