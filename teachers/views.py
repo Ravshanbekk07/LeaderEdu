@@ -51,6 +51,13 @@ class TeacherDetail(APIView):
         teacher=get_object_or_404(Teacher,id=pk)
         teacher.delete()
         return Response({"status":'Deleted'})
+    
+class TeacherSearch(APIView):
+    def get(self,request):
+        name_uz=request.GET.get('name','')
+        teacher=Teacher.objects.filter(name_uz__icontains=name_uz)
+        serializer=TeacherSerializer(teacher,many=True)
+        return Response(serializer.data)
         
 
 
