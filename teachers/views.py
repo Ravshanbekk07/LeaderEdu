@@ -5,6 +5,7 @@ from .serializers import TeacherSerializer,TeacherSerializerUZ,TeacherSerializer
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 
 
 def check_user(role):
@@ -22,14 +23,20 @@ class TeacherList(APIView):
             teachers=Teacher.objects.all()
             serializer=TeacherSerializerRU(teachers,many=True)
             return Response(serializer.data)
-        
+        else:
+            return Response({'error':'Language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
     def post(self,request):
-        check_user(role=request.user.role)
-        serializer=TeacherSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+        if request.user.is_authenticated:
+            check_user(role=request.user.role)
+            
+            serializer=TeacherSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors)
+        else:
+            return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
 class TeacherDetail(APIView):
     def get(self,request,pk):
         teacher=get_object_or_404(Teacher,id=pk)
