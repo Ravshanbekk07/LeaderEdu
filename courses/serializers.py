@@ -13,20 +13,15 @@ class CourseSerializer(serializers.ModelSerializer):
         if instance.teacher:
             representation['teacher_detail'] = TeacherSerializer(instance.teacher).data
         return representation
-
-
 class CategorySerializerRU(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id','type_ru', 'description_ru', 'picture']
-
 class CategorySerializerUZ(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id','type_uz', 'description_uz', 'picture']
-
 class CategorySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Category
         fields = '__all__' 

@@ -1,7 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from .models import Teacher
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
 from .serializers import TeacherSerializer,TeacherSerializerUZ,TeacherSerializerRU
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.views import APIView
@@ -13,7 +12,6 @@ def check_user(role):
         raise PermissionDenied(detail='Only admins are allowed')
     
 class TeacherList(APIView):
-
     def get(self,request):
         language=request.GET.get('language','ru')
         if language=='uz':

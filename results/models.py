@@ -8,4 +8,4 @@ class Results(models.Model):
     teacher=models.ForeignKey(Teacher,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.teacher
+        return str(self.teacher)

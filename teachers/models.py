@@ -13,9 +13,5 @@ class Teacher(models.Model):
     score=models.CharField(max_length=50)
     picture=models.ImageField(upload_to='pictures',null=True,blank=True)
 
-    
-
-
-
     def __str__(self) -> str:
         return self.name_uz
