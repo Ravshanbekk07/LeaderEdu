@@ -11,12 +11,12 @@ class TeacherSerializerUZ(serializers.ModelSerializer):
    
     class Meta:
         model=Teacher
-        fields=['id','name_uz','description_uz','phone','experience','score','picture',]
+        fields=['id','name_uz','description_uz','phone','experience_uz','score','picture',]
 
    
 class TeacherSerializerRU(serializers.ModelSerializer):
     class Meta:
         model=Teacher
-        fields=['id','name_ru','description_ru','phone','experience','score','picture']
+        fields=['id','name_ru','description_ru','phone','experience_ru','score','picture']
        
         

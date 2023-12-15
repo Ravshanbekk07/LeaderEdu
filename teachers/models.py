@@ -9,7 +9,8 @@ class Teacher(models.Model):
     description_ru=models.CharField(null=True,blank=True)
 
     phone=PhoneNumberField()
-    experience=models.CharField(max_length=50)
+    experience_uz=models.CharField(max_length=50)
+    experience_ru=models.CharField(max_length=50)
     score=models.CharField(max_length=50)
     picture=models.ImageField(upload_to='pictures',null=True,blank=True)
 
