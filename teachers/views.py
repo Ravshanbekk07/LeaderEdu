@@ -6,7 +6,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 def check_user(role):
     if role!='admin':
@@ -26,6 +26,9 @@ class TeacherList(APIView):
         else:
             return Response({'error':'Language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
+class TeacherCreateView(APIView):
+    # permission_classes=[IsAuthenticated]
+    # authentication_classes=[JWTAuthentication]
     def post(self,request):
         if request.user.is_authenticated:
             check_user(role=request.user.role)
@@ -42,7 +45,9 @@ class TeacherDetail(APIView):
         teacher=get_object_or_404(Teacher,id=pk)
         serializer=TeacherSerializer(teacher)
         return Response(serializer.data)
-
+class TeacherUpdate(APIView):
+    # permission_classes=[IsAuthenticated]
+    # authentication_classes=[JWTAuthentication]
     def put(self,request,pk):
         check_user(request.user.role)
         teacher=get_object_or_404(Teacher,id=pk)
@@ -51,6 +56,9 @@ class TeacherDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+class TeacherDelete(APIView):
+    # permission_classes=[IsAuthenticated]
+    # authentication_classes=[JWTAuthentication]
     def delete(self,request,pk):
         check_user(role=request.user.role)
         teacher=get_object_or_404(Teacher,id=pk)
