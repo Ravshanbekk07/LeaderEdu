@@ -7,7 +7,7 @@ from .serializers import Enrolmenterializer,EnrolmentSerializerRu,EnrolmentSeria
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
-
+from courses.models import Courses
 
 def check_user(role):
     if role!='admin':
@@ -69,6 +69,17 @@ class EnrolmentDelete(APIView):
 
 
         
+class EnrolmentCreate(APIView):
+   
+    def post(self,request):
+        check_user(request.user.role)
+        course_id = request.POST.get('courses')
+        course = Courses.objects.get(id=course_id)
+        serializer=EnrolmentCreate(data=request.data)
+        if serializer.is_valid():
+            serializer.save(course)
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
-
+     

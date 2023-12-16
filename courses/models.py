@@ -26,7 +26,7 @@ class Category(models.Model):
     type_ru=models.CharField(max_length=100)
     description_uz=models.CharField()
     description_ru=models.CharField()
-    picture =models.ImageField(upload_to='pictures/',null=True,blank=True)
+    picture =models.ImageField(upload_to='pictures',null=True,blank=True)
     
 
     def __str__(self) -> str:
