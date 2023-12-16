@@ -13,6 +13,12 @@ class CourseSerializer(serializers.ModelSerializer):
         if instance.teacher:
             representation['teacher_detail'] = TeacherSerializer(instance.teacher).data
         return representation
+    
+class CourseSerializerUZ(serializers.ModelSerializer):
+    pass
+class CourseSerializerRU(serializers.ModelSerializer):
+    pass
+
 class CategorySerializerRU(serializers.ModelSerializer):
     class Meta:
         model = Category
