@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'users',
     'courses',
     'results',
-    
+    'enrolment'
  
     
 ]

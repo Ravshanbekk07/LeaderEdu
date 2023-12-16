@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import CourseList,CourseDetail,CourseCreate,CourseDelete,CourseUpdate,CategoryList,CategoryDelete
+from .views import (CourseList,CourseDetail,CourseCreate,
+CourseDelete,CourseUpdate,CategoryList,CategoryDelete,CategoryDetail,CategoryCreate,CategoryUpdate)
 
 urlpatterns = [
     path('all/',CourseList.as_view()),
@@ -11,5 +12,7 @@ urlpatterns = [
 
     path('category/all/',CategoryList.as_view()),
     path('category/<int:pk>/',CategoryDelete.as_view()),
-    
+    path('category/<int:pk>/',CategoryUpdate.as_view()),
+    path('category/<int:pk>/',CategoryDetail.as_view()),
+    path('category/create/',CategoryCreate.as_view()),
 ]
