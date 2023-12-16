@@ -2,6 +2,11 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 class Enrolment(models.Model):
+    STATUS=(
+        ('New','New'),
+        ('Disagreement','Disagreement'),
+        ('Agreement','Agreement')
+    )
     Language_uz = (
         ("O'zbek","O'zbek"),
         ("Rus","Rus")
@@ -20,5 +25,6 @@ class Enrolment(models.Model):
 
     course_language_uz=models.CharField(max_length=30,choices=Language_uz,default="O'zbek")
     course_language_ru=models.CharField(max_length=30,choices=Language_ru,default="Русский")
+    status=models.CharField(max_length=50,choices=STATUS,default='New')
     
 
