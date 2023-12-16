@@ -15,7 +15,7 @@ class Courses(models.Model):
 
     lectures_uz=models.CharField(max_length=30)
     lectures_ru=models.CharField(max_length=30)
-    
+
     picture=models.ImageField(upload_to='pictures',null=True,blank=True)
 
     def __str__(self) -> str:
