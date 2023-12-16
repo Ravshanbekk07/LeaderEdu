@@ -18,11 +18,11 @@ class ResultList(APIView):
         if language =='uz':
             results=Results.objects.all()
             serializer=ResultSerializerUZ(results,many=True)
-            return Response(serializer.data)
+            return Response(serializer.data,status=status.HTTP_200_OK)
         elif language=='ru':
             results=Results.objects.all()
             serializer=ResultSerializerRU(results,many=True)
-            return Response(serializer.data)
+            return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 class ResultCreate(APIView):
@@ -33,8 +33,8 @@ class ResultCreate(APIView):
         serializer=ResultSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 class ResultDetail(APIView):
     def get(self,request,pk):  
         language=request.GET.get('language','ru')
@@ -42,12 +42,12 @@ class ResultDetail(APIView):
             result=get_object_or_404(Results,id=pk)
         
             serializer=ResultSerializerUZ(result)
-            return Response(serializer.data)
+            return Response(serializer.data,status=status.HTTP_200_OK)
         elif language=='ru':
             result=get_object_or_404(Results,id=pk)
         
             serializer=ResultSerializerRU(result)
-            return Response(serializer.data)
+            return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         
@@ -60,8 +60,8 @@ class ResultUpdate(APIView):
         serializer=ResultSerializer(instance=result,data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 class ResultDelete(APIView):
     # permission_classes=[IsAuthenticated]
     # authentication_classes=[JWTAuthentication]
@@ -69,7 +69,7 @@ class ResultDelete(APIView):
         check_user(role=request.user.role)
         result=get_object_or_404(Results,id=pk)
         result.delete()
-        return Response({"status":'Deleted'})
+        return Response({"status":'Deleted'},status=status.HTTP_200_OK)
     
 
 
