@@ -30,5 +30,6 @@ class Enrolment(models.Model):
     status=models.CharField(max_length=50,choices=STATUS,default='New')
     course_id=models.ForeignKey(Courses, on_delete=models.CASCADE)
     
-
+    def __str__(self) -> str:
+        return self.name_uz
  

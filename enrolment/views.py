@@ -63,23 +63,26 @@ class EnrolmentDelete(APIView):
         enrolment=get_object_or_404(Enrolment,id=pk)
         enrolment.delete()
         return Response({"status":'Deleted'},status=status.HTTP_200_OK)
-    
-
-
-
-
-        
+      
 class EnrolmentCreate(APIView):
    
     def post(self,request):
         check_user(request.user.role)
-        course_id = request.POST.get('courses')
-        course = Courses.objects.get(id=course_id)
-        serializer=EnrolmentCreate(data=request.data)
-        if serializer.is_valid():
-            serializer.save(course)
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        language=request.GET.get('language','ru')
+        if language=='uz':
+            serializer=EnrolmentSerializerUz(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data,status=status.HTTP_201_CREATED)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        elif language=='ru':
+            serializer=EnrolmentSerializerRu(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data,status=status.HTTP_201_CREATED)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
      
