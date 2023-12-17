@@ -13,3 +13,6 @@ class CustomUser(AbstractUser):
     password=models.CharField(max_length=100)
     phone=PhoneNumberField()
     role=models.CharField(choices=STATUS,default='user')
+
+    def __str__(self) -> str:
+        return self.name

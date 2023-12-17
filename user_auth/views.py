@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from .serializers import TokenSerializer,Registerserializer
+from .serializers import TokenSerializer,Registerserializer,LoginSerializer
 from rest_framework.response import Response
 from users.models import CustomUser
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from rest_framework import status
-
+from django.contrib.auth import authenticate
+from rest_framework import permissions
 
 class ObtainTokenView(APIView):
     def post(self,request):
@@ -31,3 +32,19 @@ class RegisterView(APIView):
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+class LoginView(APIView):
+    permission_classes=[permissions.AllowAny]
+    def post(self,request):
+        serializer=LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            name=serializer.validated_data['name']
+            password=serializer.validated_data['password']
+            user=authenticate(request,name=name,password=password)
+            if user is not None:
+                refresh=RefreshToken.for_user(user)
+                return Response({ 'refresh': str(refresh),'access': str(refresh.access_token),
+            }, status=status.HTTP_201_CREATED)
+            else:
+                return Response({'error': 'Invalid login credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
