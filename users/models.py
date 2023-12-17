@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
         ('admin','admin'),
     )
 
-    name=models.CharField(max_length=100)
+    username=models.CharField(max_length=100,unique=True)
     email=models.EmailField()
     password=models.CharField(max_length=100)
     phone=PhoneNumberField()
