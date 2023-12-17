@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'phonenumber_field',
     'drf_yasg',
-
+    'corsheaders',
     #locals
     'teachers',
     'users',
@@ -64,6 +64,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -72,6 +73,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
+CORS_ALLOW_ALL_ORIGINS = True     
+
 
 TEMPLATES = [
     {
@@ -135,8 +138,9 @@ REST_FRAMEWORK={
 
     'DEFAULT_PERMISSION_CLASSES':[
         'rest_framework.permissions.AllowAny'
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 
-    ]
 }
 
 SIMPLE_JWT = {
@@ -175,3 +179,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# SWAGGER_SETTINGS = {
+#     'DEFAULT_AUTO_SCHEMA_CLASS': 'drf_yasg.inspectors.SwaggerAutoSchema',
+#     'SECURITY_DEFINITIONS': {
+#         'Bearer': {
+#             'type': 'apiKey',
+#             'name': 'Authorization',
+#             'in': 'header'
+#         }
+#     }
+# }

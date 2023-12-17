@@ -15,4 +15,4 @@ class CustomUser(AbstractUser):
     role=models.CharField(choices=STATUS,default='user')
 
     def __str__(self) -> str:
-        return self.name
+        return self.username
