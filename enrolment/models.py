@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from courses.models import Courses
+from django.core.validators import MaxValueValidator
 
 class Enrolment(models.Model):
     STATUS=(
@@ -20,7 +21,7 @@ class Enrolment(models.Model):
     name_uz=models.CharField(max_length=100)
     name_ru=models.CharField(max_length=100)
 
-    age=models.IntegerField(max_length=2)
+    age=models.IntegerField(validators=[MaxValueValidator(100)])
     student_numer=PhoneNumberField()
     parents_numer=PhoneNumberField()
 

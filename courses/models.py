@@ -1,6 +1,6 @@
 from django.db import models
 from teachers.models import Teacher
-
+from django.core.validators import MaxValueValidator
 class Courses(models.Model):
     course_name_uz=models.CharField(max_length=100)
     course_name_ru=models.CharField(max_length=100)
@@ -30,4 +30,4 @@ class Category(models.Model):
     
 
     def __str__(self) -> str:
-        return f'{self.type_uz}  {self.description_uz}'
+        return self.type_uz
