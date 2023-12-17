@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_cleanup.apps.CleanupConfig',
     'phonenumber_field',
+    'drf_yasg',
 
     #locals
     'teachers',

@@ -63,7 +63,7 @@
         Use the courses module to create, update, view, and delete academic courses.
 ## Results:
 
-        Access the results module to input student grades, calculate averages, generate result reports, and update or delete results.
+        Access the results module to input student grades,  generate result reports, and update or delete results.
 ## User Authentication (JWT):
 
         Register new users, log in, and log out using the user authentication module with JWT. Include the JWT token in the headers for authenticated requests. Use password change endpoints for updating passwords.
