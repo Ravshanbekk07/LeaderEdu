@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .models import Enrolment
-from .serializers import Enrolmenterializer,EnrolmentSerializerRu,EnrolmentSerializerUz
+from .serializers import Enrolmenterializer,EnrolmentSerializerRU,EnrolmentSerializerUZ
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
@@ -16,17 +16,20 @@ def check_user(role):
 class EnrolmentList(APIView):
     def get(self,request):
         check_user(request.user.role)
-        language=request.GET.get('language','ru')
-        if language =='uz':
-            enrolments=Enrolment.objects.all()
-            serializer=EnrolmentSerializerUz(enrolments,many=True)
-            return Response(serializer.data,status=status.HTTP_200_OK)
-        elif language=='ru':
-            enrolments=Enrolment.objects.all()
-            serializer=EnrolmentSerializerRu(enrolments,many=True)
-            return Response(serializer.data,status=status.HTTP_200_OK)
-        else:
-            return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        enrolments=Enrolment.objects.all()
+        serializer=Enrolmenterializer(enrolments,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+        # language=request.GET.get('language','ru')
+        # if language =='uz':
+        #     enrolments=Enrolment.objects.all()
+        #     serializer=EnrolmentSerializerUZ(enrolments,many=True)
+        #     return Response(serializer.data,status=status.HTTP_200_OK)
+        # elif language=='ru':
+        #     enrolments=Enrolment.objects.all()
+        #     serializer=EnrolmentSerializerRU(enrolments,many=True)
+        #     return Response(serializer.data,status=status.HTTP_200_OK)
+        # else:
+        #     return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 class EnrolmentDetail(APIView):
     def get(self,request,pk):  
@@ -34,12 +37,12 @@ class EnrolmentDetail(APIView):
         if language =='uz':
             enrolment=get_object_or_404(Enrolment,id=pk)
         
-            serializer=EnrolmentSerializerUz(enrolment)
+            serializer=EnrolmentSerializerUZ(enrolment)
             return Response(serializer.data,status=status.HTTP_200_OK)
         elif language=='ru':
             enrolment=get_object_or_404(Enrolment,id=pk)
         
-            serializer=EnrolmentSerializerRu(enrolment)
+            serializer=EnrolmentSerializerRU(enrolment)
             return Response(serializer.data,status=status.HTTP_200_OK)
         else:
             return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -70,13 +73,13 @@ class EnrolmentCreate(APIView):
         check_user(request.user.role)
         language=request.GET.get('language','ru')
         if language=='uz':
-            serializer=EnrolmentSerializerUz(data=request.data)
+            serializer=EnrolmentSerializerUZ(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data,status=status.HTTP_201_CREATED)
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         elif language=='ru':
-            serializer=EnrolmentSerializerRu(data=request.data)
+            serializer=EnrolmentSerializerRU(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data,status=status.HTTP_201_CREATED)
