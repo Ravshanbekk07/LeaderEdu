@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import TokenSerializer
+from .serializers import TokenSerializer,Registerserializer
 from rest_framework.response import Response
 from users.models import CustomUser
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -23,4 +23,11 @@ class ObtainTokenView(APIView):
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+class RegisterView(APIView):
+    def post(self,request):
+        serializer=Registerserializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
