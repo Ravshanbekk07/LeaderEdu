@@ -1,4 +1,4 @@
-from .views import ObtainTokenView,RegisterView,LoginView,LogoutView,PasswordChange,GoogleSignUp
+from .views import ObtainTokenView,RegisterView,LoginView,LogoutView,PasswordChange#,GoogleSignUp
 from django.urls import path
 
 urlpatterns = [
@@ -7,5 +7,5 @@ urlpatterns = [
     path('login/',LoginView.as_view()),
     path('logout/',LogoutView.as_view()),
     path('change-password/',PasswordChange.as_view()),
-    path('auth/google/',GoogleSignUp.as_view()),
+    # path('auth/google/',GoogleSignUp.as_view()),
 ]
