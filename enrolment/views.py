@@ -14,25 +14,21 @@ def check_user(role):
         raise PermissionDenied(detail='Only admins are allowed')
 
 class EnrolmentList(APIView):
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def get(self,request):
         check_user(request.user.role)
         enrolments=Enrolment.objects.all()
         serializer=Enrolmenterializer(enrolments,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
-        # language=request.GET.get('language','ru')
-        # if language =='uz':
-        #     enrolments=Enrolment.objects.all()
-        #     serializer=EnrolmentSerializerUZ(enrolments,many=True)
-        #     return Response(serializer.data,status=status.HTTP_200_OK)
-        # elif language=='ru':
-        #     enrolments=Enrolment.objects.all()
-        #     serializer=EnrolmentSerializerRU(enrolments,many=True)
-        #     return Response(serializer.data,status=status.HTTP_200_OK)
-        # else:
-        #     return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        
 
 class EnrolmentDetail(APIView):
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def get(self,request,pk):  
+        check_user(request.user.role)
+
         language=request.GET.get('language','ru')
         if language =='uz':
             enrolment=get_object_or_404(Enrolment,id=pk)
@@ -48,8 +44,8 @@ class EnrolmentDetail(APIView):
             return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         
 class EnrolmentUpdate(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def put(self,request,pk):
         check_user(request.user.role)
         enrolment=get_object_or_404(Enrolment,id=pk)
@@ -59,8 +55,8 @@ class EnrolmentUpdate(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 class EnrolmentDelete(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def delete(self,request,pk):
         check_user(role=request.user.role)
         enrolment=get_object_or_404(Enrolment,id=pk)
@@ -68,9 +64,7 @@ class EnrolmentDelete(APIView):
         return Response({"status":'Deleted'},status=status.HTTP_200_OK)
       
 class EnrolmentCreate(APIView):
-   
     def post(self,request):
-        check_user(request.user.role)
         language=request.GET.get('language','ru')
         if language=='uz':
             serializer=EnrolmentSerializerUZ(data=request.data)
@@ -85,7 +79,7 @@ class EnrolmentCreate(APIView):
                 return Response(serializer.data,status=status.HTTP_201_CREATED)
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response({'Language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
      
