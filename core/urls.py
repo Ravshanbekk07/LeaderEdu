@@ -48,4 +48,6 @@ urlpatterns = [
     path('results/', include('results.urls')),
     path('enrolment/', include('enrolment.urls')),
     path('user/', include('user_auth.urls')),
+    
+    path('auth/', include('social_django.urls',namespace='social')),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,19 @@
 from users.models import CustomUser
 from rest_framework import serializers
+from social_django.models import UserSocialAuth
 
+class GoogleUserSerializer(serializers.Serializer):
+     def create(self, validated_data):
+        
+        user, created = CustomUser.objects.get_or_create(
+                                                    email=validated_data['email'], 
+                                                    )
+       
+        return user
+
+        
+        
+        
 
 class TokenSerializer(serializers.Serializer):
     username=serializers.CharField(max_length=50)

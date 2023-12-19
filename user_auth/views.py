@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import TokenSerializer,Registerserializer,LoginSerializer,PasswordChangeSerializer
+from .serializers import TokenSerializer,Registerserializer,LoginSerializer,PasswordChangeSerializer,GoogleUserSerializer
 from rest_framework.response import Response
 from users.models import CustomUser
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -8,6 +8,22 @@ from rest_framework import status
 from django.contrib.auth import authenticate
 from rest_framework import permissions
 from django.contrib.auth import logout
+from social_django.models import UserSocialAuth
+
+
+
+class GoogleSignUp(APIView):
+  
+    def post(self, request):
+        serializer = GoogleUserSerializer(data=request.data)
+        if serializer.is_valid():
+
+            user = serializer.save()
+            return Response({'message': 'User created successfully', 'password': user.password}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        
+        
 
 class ObtainTokenView(APIView):
     def post(self,request):
