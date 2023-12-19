@@ -26,8 +26,8 @@ class ResultList(APIView):
         else:
             return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 class ResultCreate(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def post(self,request):
         check_user(request.user.role)
         serializer=ResultSerializer(data=request.data)
@@ -52,8 +52,8 @@ class ResultDetail(APIView):
             return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         
 class ResultUpdate(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def put(self,request,pk):
         check_user(request.user.role)
         result=get_object_or_404(Results,id=pk)
@@ -63,8 +63,8 @@ class ResultUpdate(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 class ResultDelete(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def delete(self,request,pk):
         check_user(role=request.user.role)
         result=get_object_or_404(Results,id=pk)
