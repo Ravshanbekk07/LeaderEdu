@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import TokenSerializer,Registerserializer,LoginSerializer,PasswordChangeSerializer,GoogleUserSerializer
+from .serializers import TokenSerializer,Registerserializer,LoginSerializer,PasswordChangeSerializer,GoogleSignupSerializer
 from rest_framework.response import Response
 from users.models import CustomUser
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -9,21 +9,44 @@ from django.contrib.auth import authenticate
 from rest_framework import permissions
 from django.contrib.auth import logout
 from social_django.models import UserSocialAuth
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 
-
+def login(request):
+    return render(request,'login.html')
+@login_required
+def home(request):
+    return render(request,'home.html')
 
 class GoogleSignUp(APIView):
-  
     def post(self, request):
-        serializer = GoogleUserSerializer(data=request.data)
-        if serializer.is_valid():
+        serializer = GoogleSignupSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-            user = serializer.save()
-            return Response({'message': 'User created successfully', 'password': user.password}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+      
+        email = serializer.validated_data['email']
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
 
-        
-        
+       
+        user, created = CustomUser.objects.get_or_create(
+            email=email,
+            defaults={'username': username},
+        )
+
+        if not created:
+            return Response({'error': 'User with this email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+   
+        user.set_password(password)
+        user.save()
+
+       
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+
+        return Response({'access_token': access_token}, status=status.HTTP_201_CREATED)
+
 
 class ObtainTokenView(APIView):
     def post(self,request):

@@ -23,7 +23,7 @@ from drf_yasg import openapi
 
 from django.conf import settings
 from django.conf.urls.static import static
-
+from user_auth.views import login
 
 schema_view = get_schema_view (
     openapi.Info(
@@ -48,6 +48,8 @@ urlpatterns = [
     path('results/', include('results.urls')),
     path('enrolment/', include('enrolment.urls')),
     path('user/', include('user_auth.urls')),
-    
+
     path('auth/', include('social_django.urls',namespace='social')),
+    path('login/',login,name='login'),
+    
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
