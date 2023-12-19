@@ -27,8 +27,8 @@ class CourseList(APIView):
         else:
             return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 class CourseCreate(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def post(self,request):
         check_user(request.user.role)
         serializer=CourseSerializer(data=request.data)
@@ -53,8 +53,8 @@ class CourseDetail(APIView):
             return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         
 class CourseUpdate(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def put(self,request,pk):
         check_user(request.user.role)
         result=get_object_or_404(Courses,id=pk)
@@ -64,8 +64,8 @@ class CourseUpdate(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 class CourseDelete(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def delete(self,request,pk):
         check_user(role=request.user.role)
         result=get_object_or_404(Courses,id=pk)
@@ -84,8 +84,8 @@ class CategoryList(APIView):
             serializer=CategorySerializerRU(categories,many=True)
             return Response(serializer.data)
 class CategoryCreate(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def post(self,request):
         check_user(request.user.role)
         serializer=CategorySerializer(data=request.data)
@@ -107,8 +107,8 @@ class CategoryDetail(APIView):
         else:
             return Response({'language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 class CategoryUpdate(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def put(self,request,pk):
         check_user(request.user.role)
         category=get_object_or_404(Category,id=pk)
@@ -118,8 +118,8 @@ class CategoryUpdate(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)        
 class CategoryDelete(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def delete(self,request,pk):
         check_user(role=request.user.role)
         category=get_object_or_404(Category,id=pk)
