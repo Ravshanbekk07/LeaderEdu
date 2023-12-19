@@ -2,10 +2,10 @@ from users.models import CustomUser
 from rest_framework import serializers
 from social_django.models import UserSocialAuth
 
-class GoogleSignupSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    username = serializers.CharField()
-    password = serializers.CharField(write_only=True)
+# class GoogleSignupSerializer(serializers.Serializer):
+#     email = serializers.EmailField()
+#     username = serializers.CharField()
+#     password = serializers.CharField(write_only=True)
         
         
 

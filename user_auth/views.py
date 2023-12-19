@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import TokenSerializer,Registerserializer,LoginSerializer,PasswordChangeSerializer,GoogleSignupSerializer
+from .serializers import TokenSerializer,Registerserializer,LoginSerializer,PasswordChangeSerializer#,GoogleSignupSerializer
 from rest_framework.response import Response
 from users.models import CustomUser
 from rest_framework_simplejwt.tokens import RefreshToken

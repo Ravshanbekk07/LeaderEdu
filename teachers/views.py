@@ -27,27 +27,35 @@ class TeacherList(APIView):
             return Response({'error':'Language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 class TeacherCreateView(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def post(self,request):
-        if request.user.is_authenticated:
+        
             check_user(role=request.user.role)
-            
             serializer=TeacherSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data,status=status.HTTP_201_CREATED)
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
+        
 class TeacherDetail(APIView):
+   
     def get(self,request,pk):
-        teacher=get_object_or_404(Teacher,id=pk)
-        serializer=TeacherSerializer(teacher)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        language=request.GET.get('language','ru')
+        if language=='uz':
+            teacher=get_object_or_404(Teacher,id=pk)
+            serializer=TeacherSerializerUZ(teacher)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        elif language=='ru':
+            teacher=get_object_or_404(Teacher,id=pk)
+            serializer=TeacherSerializerRU(teacher)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        else:
+            return Response({'error':'Language forbidden'},status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
 class TeacherUpdate(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def put(self,request,pk):
         check_user(request.user.role)
         teacher=get_object_or_404(Teacher,id=pk)
@@ -57,8 +65,8 @@ class TeacherUpdate(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 class TeacherDelete(APIView):
-    # permission_classes=[IsAuthenticated]
-    # authentication_classes=[JWTAuthentication]
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def delete(self,request,pk):
         check_user(role=request.user.role)
         teacher=get_object_or_404(Teacher,id=pk)
@@ -66,7 +74,11 @@ class TeacherDelete(APIView):
         return Response({"status":'Deleted'},status=status.HTTP_200_OK)
     
 class TeacherSearch(APIView):
+    permission_classes=[IsAuthenticated]
+    authentication_classes=[JWTAuthentication]
     def get(self,request):
+        check_user(role=request.user.role)
+
         name_uz=request.GET.get('name','')
         teacher=Teacher.objects.filter(name_uz__icontains=name_uz)
         serializer=TeacherSerializer(teacher,many=True)
