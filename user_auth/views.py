@@ -11,7 +11,7 @@ from django.contrib.auth import logout
 from social_django.models import UserSocialAuth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-
+from social_django.utils import psa
 def login(request):
     return render(request,'login.html')
 @login_required
@@ -46,7 +46,8 @@ def home(request):
 
 #         return Response({'access_token': access_token}, status=status.HTTP_201_CREATED)
 
-
+           
+                
 class ObtainTokenView(APIView):
     def post(self,request):
         serializer=TokenSerializer(data=request.data)

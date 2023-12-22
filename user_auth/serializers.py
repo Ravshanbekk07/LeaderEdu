@@ -7,7 +7,8 @@ from social_django.models import UserSocialAuth
 #     username = serializers.CharField()
 #     password = serializers.CharField(write_only=True)
         
-        
+class SocialAccessTokenSerializer(serializers.Serializer):
+    email = serializers.EmailField()
 
 class TokenSerializer(serializers.Serializer):
     username=serializers.CharField(max_length=50)
@@ -17,15 +18,19 @@ class Registerserializer(serializers.ModelSerializer):
         model=CustomUser
         fields=['username','password','email']
         extra_kwargs=({'password':{'write_only':True}})
-
+    
+    
     def create(self,validated_data):
-        user=CustomUser(
-            username=validated_data['username'],
-            email=validated_data['email'],
-        )
-        user.set_password(validated_data['password'])
-        user.save()
-        return user
+            if len(validated_data['password']) < 8:
+                raise serializers.ValidationError("Password must be at least 8 characters long.")
+            else:
+                user=CustomUser(
+                    username=validated_data['username'],
+                    email=validated_data['email'],
+                )
+                user.set_password(validated_data['password'])
+                user.save()
+                return user
     
 class LoginSerializer(serializers.Serializer):
     username=serializers.CharField()
