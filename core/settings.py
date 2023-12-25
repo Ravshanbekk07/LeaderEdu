@@ -134,15 +134,22 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+    #PROJECT ASIDA POSTGRESDA QILINGAN AMMO DEPLOY QILISH PULLI BOLGANI UCHUN SQL GA O'TKAZYAPMAN YANA
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': config("DB_NAME"),
+#         'USER':config('USER'),
+#         'PASSWORD':config('PASSWORD'),
+#         'HOST':config('HOST', default='default_host_value'),
+#         'PORT':config('PORT')
+#     }
+# }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config("DB_NAME"),
-        'USER':config('USER'),
-        'PASSWORD':config('PASSWORD'),
-        'HOST':config('HOST', default='default_host_value'),
-        'PORT':config('PORT')
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
