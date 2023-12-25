@@ -24,8 +24,8 @@ class Courses(models.Model):
 class Category(models.Model):
     type_uz=models.CharField(max_length=100)
     type_ru=models.CharField(max_length=100)
-    description_uz=models.CharField()
-    description_ru=models.CharField()
+    description_uz=models.CharField(max_length=500)
+    description_ru=models.CharField(max_length=500)
     picture =models.ImageField(upload_to='pictures',null=True,blank=True)
     
 

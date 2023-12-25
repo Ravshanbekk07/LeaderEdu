@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
     email=models.EmailField()
     password=models.CharField(max_length=100)
     phone=PhoneNumberField()
-    role=models.CharField(choices=STATUS,default='user')
+    role=models.CharField(max_length=30,choices=STATUS,default='user')
 
     def __str__(self) -> str:
         return self.username

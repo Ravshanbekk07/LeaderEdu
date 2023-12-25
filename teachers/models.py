@@ -5,8 +5,8 @@ class Teacher(models.Model):
     name_uz=models.CharField(max_length=100)
     name_ru=models.CharField(max_length=100)
 
-    description_uz=models.CharField(null=True,blank=True)
-    description_ru=models.CharField(null=True,blank=True)
+    description_uz=models.CharField(max_length=500,null=True,blank=True)
+    description_ru=models.CharField(max_length=500,null=True,blank=True)
 
     phone=PhoneNumberField()
     experience_uz=models.CharField(max_length=50)
